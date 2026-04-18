@@ -1,0 +1,27 @@
+{
+	"name": "adapter-cloudflare-handlers",
+	"version": "0.1.0",
+	"description": "Decorator for @sveltejs/adapter-cloudflare that adds scheduled, queue, and email handlers from src/handlers.cloudflare.{js,ts,mjs}",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"import": "./index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"types": "index.d.ts",
+	"files": [
+		"index.js",
+		"index.d.ts"
+	],
+	"peerDependencies": {
+		"@sveltejs/adapter-cloudflare": "^7.0.0",
+		"@sveltejs/kit": "^2.0.0"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250507.0",
+		"@sveltejs/kit": "^2.0.0",
+		"typescript": "^5.0.0"
+	}
+}
