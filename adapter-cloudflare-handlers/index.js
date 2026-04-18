@@ -3,17 +3,14 @@ import path from 'node:path';
 
 /** @import { Adapter, Builder } from '@sveltejs/kit' */
 
-const USER_HANDLER_CANDIDATES = [
-	'src/handlers.cloudflare.js',
-	'src/handlers.cloudflare.ts',
-	'src/handlers.cloudflare.mjs'
-];
-
 /**
  * Decorate `@sveltejs/adapter-cloudflare` so that named exports from
- * `src/handlers.cloudflare.{js,ts,mjs}` (or a custom path) are wired onto the
+ * `src/handlers.cloudflare.<ext>` (or a custom path) are wired onto the
  * Worker's default export alongside `fetch`. Recognized exports: `scheduled`,
  * `queue`, `email`. Absent exports leave no trace on the final default export.
+ *
+ * The extension list is derived from `kit.moduleExtensions`, so whatever
+ * extensions SvelteKit treats as modules in your project will be honored.
  *
  * @param {Adapter} base The adapter returned by `@sveltejs/adapter-cloudflare`.
  * @param {{
@@ -32,10 +29,13 @@ export default function withCloudflareHandlers(base, options = {}) {
 		async adapt(builder) {
 			await base.adapt(builder);
 
-			const entry = options.entry ?? USER_HANDLER_CANDIDATES.find((p) => existsSync(p));
+			const candidates = builder.config.kit.moduleExtensions.map(
+				(ext) => `src/handlers.cloudflare${ext}`
+			);
+			const entry = options.entry ?? candidates.find((p) => existsSync(p));
 			if (!entry || !existsSync(entry)) {
 				builder.log.minor(
-					'adapter-cloudflare-handlers: no src/handlers.cloudflare.{js,ts,mjs} found, skipping'
+					`adapter-cloudflare-handlers: no ${candidates.join(' / ')} found, skipping`
 				);
 				return;
 			}

@@ -8,8 +8,9 @@ import type {
 
 export interface WithCloudflareHandlersOptions {
 	/**
-	 * Override the convention-file path. Defaults to whichever of
-	 * `src/handlers.cloudflare.{js,ts,mjs}` exists.
+	 * Override the convention-file path. Defaults to whichever
+	 * `src/handlers.cloudflare.<ext>` exists, where `<ext>` iterates over
+	 * `kit.moduleExtensions`.
 	 */
 	entry?: string;
 	/**
@@ -21,8 +22,8 @@ export interface WithCloudflareHandlersOptions {
 
 /**
  * Decorate `@sveltejs/adapter-cloudflare` so that named exports from
- * `src/handlers.cloudflare.{js,ts,mjs}` are wired onto the Worker's
- * default export alongside `fetch`.
+ * `src/handlers.cloudflare.<ext>` are wired onto the Worker's default
+ * export alongside `fetch`. Extensions are derived from `kit.moduleExtensions`.
  */
 export default function withCloudflareHandlers(
 	base: Adapter,
