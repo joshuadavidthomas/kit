@@ -25,7 +25,7 @@ const USER_HANDLER_CANDIDATES = [
  *   which matches the base adapter's default).
  * @returns {Adapter}
  */
-export default function withHandlers(base, options = {}) {
+export default function withCloudflareHandlers(base, options = {}) {
 	return {
 		name: `${base.name}+handlers`,
 		/** @param {Builder} builder */

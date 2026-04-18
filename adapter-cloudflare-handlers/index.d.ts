@@ -6,7 +6,7 @@ import type {
 	ScheduledController
 } from '@cloudflare/workers-types';
 
-export interface WithHandlersOptions {
+export interface WithCloudflareHandlersOptions {
 	/**
 	 * Override the convention-file path. Defaults to whichever of
 	 * `src/handlers.cloudflare.{js,ts,mjs}` exists.
@@ -24,7 +24,10 @@ export interface WithHandlersOptions {
  * `src/handlers.cloudflare.{js,ts,mjs}` are wired onto the Worker's
  * default export alongside `fetch`.
  */
-export default function withHandlers(base: Adapter, options?: WithHandlersOptions): Adapter;
+export default function withCloudflareHandlers(
+	base: Adapter,
+	options?: WithCloudflareHandlersOptions
+): Adapter;
 
 /**
  * Optional identity helper that gives handler modules full IntelliSense
